@@ -46,6 +46,24 @@ string check_win(string play_field[3][3])
 		}
 	}
 
+	//diagonal1
+	if (play_field[0][0] == play_field[1][1] && play_field[1][1] == play_field[2][2])
+	{
+		if (play_field[0][0] != "_")
+			{
+				return play_field[0][0];
+			}
+	}
+
+	//diagonal2
+	if (play_field[0][2] == play_field[1][1] && play_field[1][1] == play_field[2][0])
+	{
+		if (play_field[0][2] != "_")
+			{
+				return play_field[0][2];
+			}
+	}
+
 	return "";
 }
 
