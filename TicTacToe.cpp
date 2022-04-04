@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <set>
 using namespace std;
 
 void print_play_field(string play_field[3][3], string current_player)
@@ -74,7 +75,7 @@ int main()
 							   {"_", "_", "_"}};
 	string player1 = "X", player2 = "O";
 	string current_player;
-	string allowed_entrys[3] = {"1", "2", "3"};
+	std::set<int> allowed_entrys = {1, 2, 3};
 	int new_line, new_column;
 
 	srand(time(0));
@@ -104,7 +105,7 @@ int main()
 		cout << "Gebe die Spalte des neuen Eintrags ein : ";
 		cin >> new_column;
 
-		if (new_line > 3 || new_column > 3)
+		if (allowed_entrys.find(new_line) == allowed_entrys.end() || allowed_entrys.find(new_column) == allowed_entrys.end())
 		{
 			continue;
 		}
