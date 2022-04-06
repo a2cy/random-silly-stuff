@@ -45,14 +45,14 @@ def click_regsitration(x, y):
 
         if player_position == [9, 9]:
             turtle.penup()
-            turtle.goto(-100, 220)
+            turtle.goto(-50, 200)
             turtle.write(f'Gewonnen', font=(
                 "Verdana", 15, "normal"))
             turtle.exitonclick()
-        
+
         if player_health < 1:
             turtle.penup()
-            turtle.goto(-100, 220)
+            turtle.goto(-40, 200)
             turtle.write(f'Verloren', font=(
                 "Verdana", 15, "normal"))
             turtle.exitonclick()
@@ -65,6 +65,9 @@ def click_regsitration(x, y):
     turtle.goto(-100, 160)
     turtle.write(f'Verbleibende Leben: {player_health}', font=(
         "Verdana", 15, "normal"))
+    turtle.goto(125, -145)
+    turtle.write(f'Ziel', font=(
+        "Verdana", 10, "normal"))
     turtle.update()
 
 
@@ -95,6 +98,9 @@ turtle.penup()
 turtle.goto(-100, 160)
 turtle.write(f'Verbleibende Leben: {player_health}', font=(
     "Verdana", 15, "normal"))
+turtle.goto(125, -145)
+turtle.write(f'Ziel', font=(
+    "Verdana", 10, "normal"))
 
 turtle.update()
 turtle.mainloop()
