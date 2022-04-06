@@ -48,14 +48,14 @@ def click_regsitration(x, y):
             turtle.goto(-100, 220)
             turtle.write(f'Gewonnen', font=(
                 "Verdana", 15, "normal"))
-            turtle.done()
+            turtle.exitonclick()
         
         if player_health < 1:
             turtle.penup()
             turtle.goto(-100, 220)
             turtle.write(f'Verloren', font=(
                 "Verdana", 15, "normal"))
-            turtle.done()
+            turtle.exitonclick()
 
     turtle.clear()
     print_play_field()
