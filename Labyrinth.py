@@ -34,8 +34,8 @@ def click_regsitration(x, y):
     global player_health, player_position
     pos = [int(x//30+5), int((y//30-4)*-1)]
     if pos[0] in [i for i in range(10)] and pos[1] in [i for i in range(10)] and \
-            (pos[0] == player_position[0]+1 or pos[1] == player_position[1]+1 or
-             pos[0] == player_position[0]-1 or pos[1] == player_position[1]-1):
+            pos[0] <= player_position[0]+1 and pos[0] >= player_position[0]-1 and \
+             pos[1] <= player_position[1]+1 and pos[1] >= player_position[1]-1:
 
         if play_field[pos[1]][pos[0]] == 0:
             player_position = pos
@@ -57,18 +57,18 @@ def click_regsitration(x, y):
                 "Verdana", 15, "normal"))
             turtle.exitonclick()
 
-    turtle.clear()
-    print_play_field()
-    show_walls()
-    show_player(player_position)
-    turtle.penup()
-    turtle.goto(-100, 160)
-    turtle.write(f'Verbleibende Leben: {player_health}', font=(
-        "Verdana", 15, "normal"))
-    turtle.goto(125, -145)
-    turtle.write(f'Ziel', font=(
-        "Verdana", 10, "normal"))
-    turtle.update()
+        turtle.clear()
+        print_play_field()
+        show_walls()
+        show_player(player_position)
+        turtle.penup()
+        turtle.goto(-100, 160)
+        turtle.write(f'Verbleibende Leben: {player_health}', font=(
+            "Verdana", 15, "normal"))
+        turtle.goto(125, -145)
+        turtle.write(f'Ziel', font=(
+            "Verdana", 10, "normal"))
+        turtle.update()
 
 
 play_field = [[0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
