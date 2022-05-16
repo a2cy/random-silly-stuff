@@ -1,7 +1,7 @@
 import random
 
 
-def print_play_field() -> None:
+def print_play_field():
     for i in range(40):
         print('')
 
@@ -11,7 +11,7 @@ def print_play_field() -> None:
         print(f'{line[0]} {line[1]} {line[2]}')
 
 
-def check_win() -> str:
+def check_win():
     # horizontal
     for i in range(3):
         if play_field[i][0] == play_field[i][1] == play_field[i][2]:
