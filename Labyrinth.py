@@ -1,7 +1,7 @@
 import turtle
 
 
-def print_play_field -> None():
+def print_play_field() -> None:
     for i in range(10**2):
         turtle.penup()
         turtle.goto(i//10*30-30*5, i % 10*30-30*5)
@@ -24,13 +24,13 @@ def show_walls() -> None:
         turtle.end_fill()
 
 
-def show_player -> None(pos):
+def show_player(pos) -> None:
     turtle.penup()
     turtle.goto(pos[0]*30-30*5+15, -pos[1]*30+30*4+15)
     turtle.dot(15)
 
 
-def click_regsitration -> None(x, y):
+def click_regsitration(x, y) -> None:
     global player_health, player_position
     pos = [int(x//30+5), int((y//30-4)*-1)]
     if pos[0] in [i for i in range(10)] and pos[1] in [i for i in range(10)] and \
