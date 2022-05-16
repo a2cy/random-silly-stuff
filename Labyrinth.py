@@ -94,7 +94,7 @@ game_field = [[0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
               [0, 1, 0, 0, 1, 0, 0, 0, 1, 0]]
 
 player_position = [0, 0]
-player_health = 300
+player_health = 3
 found_walls = []
 
 screen = turtle.Screen()
