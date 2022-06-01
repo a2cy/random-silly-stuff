@@ -1,108 +1,111 @@
 import turtle
 
 
-def update_screen():
-    global player_position, player_health, found_walls
-    turtle.clear()
+class Labyrinth():
+    
+    def __init__(self):
+        self.game_grid = [[0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+                         [0, 0, 0, 1, 1, 1, 0, 1, 1, 0],
+                         [0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
+                         [0, 1, 0, 0, 0, 1, 0, 1, 1, 0],
+                         [0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
+                         [0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
+                         [1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
+                         [0, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+                         [0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
+                         [0, 1, 0, 0, 1, 0, 0, 0, 1, 0]]
 
-    for i in range(10**2):
-        turtle.penup()
-        turtle.goto(i//10*30-30*5, i % 10*30-30*5)
-        turtle.pendown()
+        self.player_position = [0, 0]
+        self.player_health = 3
+        self.found_walls = []
 
-        for j in range(4):
-            turtle.fd(30)
-            turtle.lt(90)
+        self.screen = turtle.Screen()
+        self.screen.onclick(self.click_registration)
 
-    for wall in found_walls:
-        turtle.penup()
-        turtle.goto(wall[0]*30-30*5, -wall[1]*30+30*4)
-        turtle.pendown()
+        turtle.tracer(0, 0)
+        turtle.hideturtle()
 
-        turtle.fillcolor("black")
-        turtle.begin_fill()
+        self.update_screen()
 
-        for j in range(4):
-            turtle.fd(30)
-            turtle.lt(90)
-
-        turtle.end_fill()
-
-    turtle.penup()
-    turtle.goto(player_position[0]*30-30*5+15, -player_position[1]*30+30*4+15)
-    turtle.dot(15)
-
-    turtle.goto(-100, 160)
-    turtle.write(f'Verbleibende Leben: {player_health}', font=(
-        "Verdana", 15, "normal"))
-
-    turtle.goto(125, -145)
-    turtle.write(f'Ziel', font=(
-        "Verdana", 10, "normal"))
-
-    turtle.update()
+        turtle.mainloop()
 
 
-def click_regsitration(x, y):
-    global game_field, player_position, player_health, found_walls
-    new_player_position = [int(x//30+5), int((y//30-4)*-1)]
+    def update_screen(self):
+        turtle.clear()
 
-    move_allowed = (0 <= new_player_position[0] < 10 and 0 <= new_player_position[1] < 10 and
-                    new_player_position[0] == player_position[0]+1 and new_player_position[1] == player_position[1] or
-                    new_player_position[0] == player_position[0]-1 and new_player_position[1] == player_position[1] or
-                    new_player_position[0] == player_position[0] and new_player_position[1] == player_position[1]+1 or
-                    new_player_position[0] == player_position[0] and new_player_position[1] == player_position[1]-1)
-
-    if move_allowed:
-        if game_field[new_player_position[1]][new_player_position[0]] == 0:
-            player_position = new_player_position
-
-        else:
-            player_health -= 1
-            found_walls.append(new_player_position)
-
-        update_screen()
-
-        if player_position == [9, 9]:
+        for i in range(10**2):
             turtle.penup()
-            turtle.goto(-50, 200)
-            turtle.write(f'Gewonnen', font=(
-                "Verdana", 15, "normal"))
+            turtle.goto(i//10*30-30*5, i % 10*30-30*5)
+            turtle.pendown()
 
-            turtle.update()
-            turtle.exitonclick()
+            for j in range(4):
+                turtle.fd(30)
+                turtle.lt(90)
 
-        if player_health < 1:
+        for wall in self.found_walls:
             turtle.penup()
-            turtle.goto(-40, 200)
-            turtle.write(f'Verloren', font=(
-                "Verdana", 15, "normal"))
+            turtle.goto(wall[0]*30-30*5, -wall[1]*30+30*4)
+            turtle.pendown()
 
-            turtle.update()
-            turtle.exitonclick()
+            turtle.fillcolor("black")
+            turtle.begin_fill()
+
+            for i in range(4):
+                turtle.fd(30)
+                turtle.lt(90)
+
+            turtle.end_fill()
+
+        turtle.penup()
+        turtle.goto(self.player_position[0]*30-30*5+15, -self.player_position[1]*30+30*4+15)
+        turtle.dot(15)
+
+        turtle.goto(-100, 160)
+        turtle.write(f'Verbleibende Leben: {self.player_health}', font=(
+            "Verdana", 15, "normal"))
+
+        turtle.goto(125, -145)
+        turtle.write(f'Ziel', font=(
+            "Verdana", 10, "normal"))
 
 
-game_field = [[0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-              [0, 0, 0, 1, 1, 1, 0, 1, 1, 0],
-              [0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
-              [0, 1, 0, 0, 0, 1, 0, 1, 1, 0],
-              [0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
-              [0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
-              [1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
-              [0, 0, 0, 1, 0, 0, 1, 0, 1, 0],
-              [0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-              [0, 1, 0, 0, 1, 0, 0, 0, 1, 0]]
+    def click_registration(self, x, y):
+        new_player_position = [int(x//30+5), int((y//30-4)*-1)]
 
-player_position = [0, 0]
-player_health = 3
-found_walls = []
+        move_allowed = (0 <= new_player_position[0] < 10 and 0 <= new_player_position[1] < 10 and
+                        (new_player_position[0] == self.player_position[0]+1 and new_player_position[1] == self.player_position[1] or
+                        new_player_position[0] == self.player_position[0]-1 and new_player_position[1] == self.player_position[1] or
+                        new_player_position[0] == self.player_position[0] and new_player_position[1] == self.player_position[1]+1 or
+                        new_player_position[0] == self.player_position[0] and new_player_position[1] == self.player_position[1]-1))
 
-screen = turtle.Screen()
-screen.onclick(click_regsitration)
+        if move_allowed:
+            if self.game_grid[new_player_position[1]][new_player_position[0]] == 0:
+                self.player_position = new_player_position
 
-turtle.tracer(0, 0)
-turtle.hideturtle()
+            else:
+                self.player_health -= 1
+                self.found_walls.append(new_player_position)
 
-update_screen()
+            self.update_screen()
 
-turtle.mainloop()
+            if self.player_position == [9, 9]:
+                turtle.penup()
+                turtle.goto(-50, 200)
+                turtle.write(f'Gewonnen', font=(
+                    "Verdana", 15, "normal"))
+
+                turtle.update()
+                self.screen.onclick(None)
+
+            if self.player_health < 1:
+                turtle.penup()
+                turtle.goto(-40, 200)
+                turtle.write(f'Verloren', font=(
+                    "Verdana", 15, "normal"))
+
+                turtle.update()
+                self.screen.onclick(None)
+
+
+if __name__ == '__main__':
+    game = Labyrinth()
