@@ -2,26 +2,27 @@
 #include <cstdlib>
 #include <ctime>
 #include <set>
-using namespace std;
 
-void print_play_field(string play_field[3][3], string current_player)
+#define str string
+
+void print_play_field(std::str play_field[3][3], std::str current_player)
 {
 	for (int i = 40; i > 0; i--)
 	{
-		cout << endl;
+		std::cout << std::endl;
 	}
 
-	cout << "Nächster Zug : " << current_player << endl;
+	std::cout << "Nächster Zug : " << current_player << std::endl;
 
 	for (int i = 0; i < 3; i++)
 	{
-		cout << play_field[i][0] << " ";
-		cout << play_field[i][1] << " ";
-		cout << play_field[i][2] << endl;
+		std::cout << play_field[i][0] << " ";
+		std::cout << play_field[i][1] << " ";
+		std::cout << play_field[i][2] << std::endl;
 	}
 }
 
-string check_win(string play_field[3][3])
+std::str check_win(std::str play_field[3][3])
 {
 	// horizontal
 	for (int i = 0; i < 3; i++)
@@ -70,11 +71,11 @@ string check_win(string play_field[3][3])
 
 int main()
 {
-	string play_field[3][3] = {{"_", "_", "_"},
+	std::str play_field[3][3] = {{"_", "_", "_"},
 							   {"_", "_", "_"},
 							   {"_", "_", "_"}};
-	string player1 = "X", player2 = "O";
-	string current_player;
+	std::str player1 = "X", player2 = "O";
+	std::str current_player;
 	std::set<int> allowed_entrys = {1, 2, 3};
 	int new_line, new_column;
 
@@ -93,17 +94,17 @@ int main()
 
 		print_play_field(play_field, current_player);
 
-		string winner = check_win(play_field);
+		std::str winner = check_win(play_field);
 		if (winner == player1 || winner == player2)
 		{
-			cout << "Der Gewinner des Spiels ist : " << winner << endl;
+			std::cout << "Der Gewinner des Spiels ist : " << winner << std::endl;
 			break;
 		}
 
-		cout << "Gebe die Zeile des neuen Eintrags ein : ";
-		cin >> new_line;
-		cout << "Gebe die Spalte des neuen Eintrags ein : ";
-		cin >> new_column;
+		std::cout << "Gebe die Zeile des neuen Eintrags ein : ";
+		std::cin >> new_line;
+		std::cout << "Gebe die Spalte des neuen Eintrags ein : ";
+		std::cin >> new_column;
 
 		if (allowed_entrys.find(new_line) == allowed_entrys.end() || allowed_entrys.find(new_column) == allowed_entrys.end())
 		{
