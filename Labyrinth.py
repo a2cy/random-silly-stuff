@@ -4,6 +4,13 @@ import turtle
 class Labyrinth():
     
     def __init__(self):
+        self.screen = turtle.Screen()
+        self.screen.title("Labyrith")
+        self.screen.onclick(self.click_registration)
+
+        turtle.tracer(0, 0)
+        turtle.hideturtle()
+
         self.game_grid = [[0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
                          [0, 0, 0, 1, 1, 1, 0, 1, 1, 0],
                          [0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
@@ -18,12 +25,6 @@ class Labyrinth():
         self.player_position = [0, 0]
         self.player_health = 3
         self.found_walls = []
-
-        self.screen = turtle.Screen()
-        self.screen.onclick(self.click_registration)
-
-        turtle.tracer(0, 0)
-        turtle.hideturtle()
 
         self.update_screen()
 
@@ -61,11 +62,11 @@ class Labyrinth():
         turtle.dot(15)
 
         turtle.goto(-100, 160)
-        turtle.write(f'Verbleibende Leben: {self.player_health}', font=(
+        turtle.write(f"Remaining lives : {self.player_health}", font=(
             "Verdana", 15, "normal"))
 
         turtle.goto(125, -145)
-        turtle.write(f'Ziel', font=(
+        turtle.write(f"End", font=(
             "Verdana", 10, "normal"))
 
 
@@ -91,7 +92,7 @@ class Labyrinth():
             if self.player_position == [9, 9]:
                 turtle.penup()
                 turtle.goto(-50, 200)
-                turtle.write(f'Gewonnen', font=(
+                turtle.write(f"You won!", font=(
                     "Verdana", 15, "normal"))
 
                 turtle.update()
@@ -100,12 +101,12 @@ class Labyrinth():
             if self.player_health < 1:
                 turtle.penup()
                 turtle.goto(-40, 200)
-                turtle.write(f'Verloren', font=(
+                turtle.write(f"You lost.", font=(
                     "Verdana", 15, "normal"))
 
                 turtle.update()
                 self.screen.onclick(None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     game = Labyrinth()
