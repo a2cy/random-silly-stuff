@@ -28,7 +28,7 @@ class Labyrinth():
 
         self.update_screen()
 
-        turtle.mainloop()
+        self.run()
 
 
     def update_screen(self):
@@ -95,7 +95,6 @@ class Labyrinth():
                 turtle.write(f"You won!", font=(
                     "Verdana", 15, "normal"))
 
-                turtle.update()
                 self.screen.onclick(None)
 
             if self.player_health < 1:
@@ -104,9 +103,16 @@ class Labyrinth():
                 turtle.write(f"You lost.", font=(
                     "Verdana", 15, "normal"))
 
-                turtle.update()
                 self.screen.onclick(None)
 
 
+    def run(self):
+        while 1:
+            try:
+                turtle.update()
+            except:
+                break
+
+
 if __name__ == "__main__":
-    game = Labyrinth()
+    Labyrinth()

@@ -1,6 +1,7 @@
 import random
 import turtle
 
+
 class TicTacToe:
 
     def __init__(self):
@@ -20,7 +21,9 @@ class TicTacToe:
 
         self.update_screen()
 
-        turtle.mainloop()
+        turtle.update()
+
+        self.run()
 
 
     def update_screen(self):
@@ -76,6 +79,7 @@ class TicTacToe:
                 return self.game_grid[0][2]
     
         temp_list = []
+
         for line in self.game_grid:
             temp_list.extend(line)
 
@@ -97,13 +101,23 @@ class TicTacToe:
             self.update_screen()
 
         winner = self.check_win()
+
         if winner:
-            self.screen.onclick(None)
             turtle.penup()
             turtle.goto(-60, 70)
             turtle.write(f"Player {winner} won.", font=(
                 "Verdana", 15, "normal"))
 
+            self.screen.onclick(None)
+
+
+    def run(self):
+        while 1:
+            try:
+                turtle.update()
+            except:
+                break
+
 
 if __name__ == "__main__":
-    game = TicTacToe()
+    TicTacToe()
