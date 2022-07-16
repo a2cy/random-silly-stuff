@@ -6,7 +6,7 @@ class ConwaysGameOfLife():
 
     def __init__(self):
         self.screen = turtle.Screen()
-        self.screen.title("Conways game of life")
+        self.screen.title("ConwaysGameOfLife")
         
         turtle.tracer(0, 0)
         turtle.hideturtle()
@@ -22,7 +22,7 @@ class ConwaysGameOfLife():
                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-        self.update()
+        self.run()
 
 
     def update_screen(self):
@@ -49,9 +49,11 @@ class ConwaysGameOfLife():
 
     def count_neighbours(self, origin_x, origin_y, game_grid):
         count = 0
+        
         for i in range(3**2):
             x = origin_x+i % 3-1
             y = origin_y+i//3-1
+
             if 0<=x<=9 and 0<=y<=9 and (x,y)!=(origin_x,origin_y):
                 count += game_grid[y][x]
 
@@ -60,22 +62,21 @@ class ConwaysGameOfLife():
 
     def update_grid(self):
         new_game_grid = [[self.game_grid[y][x] for x in range(10)] for y in range(10)]
+
         for y in range(10):
             for x in range(10):
                 neighbours = self.count_neighbours(x, y, self.game_grid)
-                if neighbours < 2:
+
+                if neighbours < 2 or neighbours > 3:
                     new_game_grid[y][x] = 0
 
                 elif neighbours == 3:
                     new_game_grid[y][x] = 1
-
-                elif neighbours > 3:
-                    new_game_grid[y][x] = 0
     
         self.game_grid = new_game_grid
     
 
-    def update(self):
+    def run(self):
         while 1:
             try:
                 self.update_grid()
@@ -87,4 +88,4 @@ class ConwaysGameOfLife():
 
 
 if __name__ == "__main__":
-    game = ConwaysGameOfLife()
+    ConwaysGameOfLife()
