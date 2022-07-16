@@ -1,47 +1,105 @@
+import sys
 import math
 import random
 import turtle
 
-def wurfParabel(yo, a, vo, turm_w, turm_h):
-    x = 0
-    while turtle.pos()[1] > -1:
-        y = yo + math.tan(math.radians(a)) * x - 9.81 / (2 * vo**2 * (math.cos(math.radians(a))**2)) * x**2
-        turtle.goto(x, y)
 
-        if turtle.pos()[0] == turm_w-1 and turtle.pos()[1] <= turm_h:
-            return "You hit the wall!"
-
-        x += 1
+class Throw:
+    def __init__(self):
+        self.screen = turtle.Screen()
+        self.screen.title("Throw")
         
-    return "You didn't hit the wall."
+        turtle.tracer(0, 0)
+        turtle.hideturtle()
 
-turtle.shape("circle")
-turtle.shapesize(.2)
+        self.tower_height = random.randint(40, 200)
+        self.tower_distance = random.randint(100, 500)
+        self.try_count = 3
 
-turm_h = random.randint(40, 200)
-turm_w = random.randint(100, 500)
-    
-turtle.goto(1000, 0)
-turtle.goto(turm_w, 0)
-turtle.goto(turm_w, turm_h)
-turtle.goto(turm_w, 0)
-turtle.home()
+        self.start_y = 0
+        self.angle = 0
+        self.start_velocity = 0
 
-for i in range(1,4):
-    print(f"Try : {i}")
+        self.update_screen()
+
+        turtle.update()
+
+        self.run()
+
+ 
+    def update_screen(self):
+        turtle.clear()
         
-    yo = float(input("Enter launch height : "))
-    a = float(input("Enter launch angle : "))
-    vo = float(input("Enter launch speed : "))
+        turtle.home()
+        turtle.pendown()
+        turtle.goto(self.tower_distance, 0)
+        turtle.goto(self.tower_distance, self.tower_height)
+        turtle.penup()
 
-    wurf_treffer = wurfParabel(yo=yo, a=a, vo=vo, turm_w=turm_w, turm_h=turm_h)
-    print(wurf_treffer)
+        turtle.goto(-55, 160)
+        turtle.write(f"Trys left : {self.try_count}", font=(
+            "Verdana", 15, "normal"))
 
-    if wurf_treffer == "You hit the wall!":
-        break
-        
-    turtle.penup()
-    turtle.home()
-    turtle.pendown()
+        if not self.start_y or not self.angle or not self.start_velocity:
+            return
 
-turtle.mainloop()
+        turtle.tracer(1, 6)
+        turtle.home()
+        turtle.pendown()
+
+        x = 0
+        while turtle.pos()[1] > -1:
+            y = self.start_y + math.tan(math.radians(self.angle)) * x - 9.81 / (2 * self.start_velocity**2 * (math.cos(math.radians(self.angle))**2)) * x**2
+            turtle.goto(x, y)
+
+            if turtle.pos()[0] == self.tower_distance-1 and turtle.pos()[1] <= self.tower_height:
+                turtle.penup()
+                turtle.goto(-60, 200)
+                turtle.write("You hit the wall!", font=(
+                    "Verdana", 15, "normal"))
+
+                return True
+
+            x += 1
+
+        turtle.tracer(0, 0)
+        turtle.hideturtle()
+        turtle.penup()
+
+        turtle.goto(-70, 200)
+        turtle.write("You didn't hit the wall.", font=(
+            "Verdana", 15, "normal"))
+
+        return False
+
+
+    def run(self):
+        while 1:
+            try:
+                if self.try_count > 0: 
+                    self.start_y = turtle.numinput("Thow", "Enter launch height")
+                    self.angle = turtle.numinput("Thow", "Enter launch angle")
+                    self.start_velocity = turtle.numinput("Throw", "Enter launch velocity")
+
+                    if not self.start_y and not self.angle and not self.start_velocity:
+                        break
+                    
+                    self.try_count -= 1
+
+                    hit = self.update_screen()
+
+                    if hit:
+                        self.try_count = 0
+
+                    self.start_y = 0
+                    self.angle = 0
+                    self.start_velocity = 0
+
+                turtle.update()
+
+            except:
+                break
+
+
+if __name__ == "__main__":
+    Throw()
